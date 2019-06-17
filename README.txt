@@ -1,3 +1,29 @@
+# Chromosome Scale Assembler: 
+# A high-throughput chromosome scale genome assembly pipeline for vertebrate genomes.
+
+# Genome assembly of vertebrate genomes has improved much since long read technologies 
+# approach read lengths larger than most repetitive elements.
+
+# Yet, the final goal to achieve assembly of full chromosomes by sequencing data alone 
+# has not been achieved.
+
+# We have build a computationally highly efficient pipeline, which after contig assembly 
+# performs post assembly improvements by ordering the assembly and closing gaps, as well 
+# as splitting of low supported regions.
+
+# The pipeline can use information from scaffolded assemblies (for example from HiC or
+# 10X Genomics), or even from diverged (~65-100 Mya) reference genomes for ordering the
+# contigs and thus support the assembly process.
+
+# For smaller vertebrate genomes (~1 Gbp) chromosome scale assemblies can be achieved 
+# within 12h on high-end Desktop computers (Intel i7, 12 CPU threads, 128 GB RAM). 
+# Larger mammalian genomes (~3Gbp) can be processed within 15-18 h on server equipment 
+# (Xeon, 96 CPU threads, 1TB RAM).
+
+# CSA can calculate (near) chromosomal scale assemblies from long read data and 
+# comparisons with publicly available diverged reference genomes for Fish, Birds and Mammals.
+
+
 # CSA-PIPELINE INSTALLATION
 #
 # THIRD PARTY OPEN SOURCE SOFTWARE USED (will be installed automatically by INSTALL.bash):
