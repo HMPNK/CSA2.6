@@ -98,7 +98,7 @@ rm used$c.list unused$c.list
 			$COMMAND="${COMMAND}\n";
 			}
 $COMMAND="${COMMAND}ln -s $out.scf$c.fa $out.step2.fa\n\n#END of CTGORDER\n
-echo;echo PRIMARY SCAFFOLD STATS;echo;
+echo;echo PRIMARY SCAFFOLD STATS:
 $bin/seq_n50.pl $out.step2.fa
 echo;date;echo FINISHED CSA STEP2;echo
 ";
