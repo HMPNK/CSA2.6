@@ -132,8 +132,8 @@ $bin/bedtools makewindows -w 233333 -b $assembly.RC.contigs.bed >> $assembly.RC.
 $bin/bedtools makewindows -w 255555 -b $assembly.RC.contigs.bed >> $assembly.RC.fakeReads.bed
 
 
-$bin/bedtools getfasta -bed $assembly.fakeReads.bed -fi $assembly -fo $assembly.fakeReads_6X.fasta
-$bin/bedtools getfasta -bed $assembly.RC.fakeReads.bed -fi $assembly.RC -fo $assembly.fakeReads_6X.fasta.RC
+$bin/bedtools getfasta -bed $assembly.fakeReads.bed -fi $assembly -fo $assembly.fakeReads_6X.fasta > /dev/null 2>&1
+$bin/bedtools getfasta -bed $assembly.RC.fakeReads.bed -fi $assembly.RC -fo $assembly.fakeReads_6X.fasta.RC > /dev/null 2>&1
 cat $assembly.fakeReads_6X.fasta $assembly.fakeReads_6X.fasta.RC |awk '{if(substr(\$1,1,1)==\">\"){print \">\"x++} else{print}}' | $bin/pigz -c  > $assembly.fakeReads_12X.fasta.gz
 rm $assembly.fakeReads_6X.fasta $assembly.fakeReads_6X.fasta.RC
 
@@ -166,7 +166,7 @@ awk '{print \$1\"\\t0\\t\"\$2}' $assembly.GAPFILL.sizes > $assembly.GAPFILL.GOOD
 fi
 
 sort -k1,1V -k2,2n $assembly.GAPFILL.SPLIT.bed $assembly.GAPFILL.GOOD.bed | awk '{print \$0\"\\t\"\$1\"_\"x[\$1]++}' > $assembly.GAPFILL.REGIONS.bed
-$bin/bedtools getfasta -name -fi $assembly.GAPFILL.fa -fo $out.step3.fa -bed $assembly.GAPFILL.REGIONS.bed
+$bin/bedtools getfasta -name -fi $assembly.GAPFILL.fa -fo $out.step3.fa -bed $assembly.GAPFILL.REGIONS.bed > /dev/null 2>&1
 ";
 $COMMAND="$COMMAND\n#END of GAP REASSEMBLY and CLOSURE. IMPROVED CONTIGS can be found in: $out.step3.fa\n\n
 
