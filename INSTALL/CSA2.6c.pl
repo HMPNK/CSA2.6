@@ -55,7 +55,7 @@ INPUT DATA: pacbio or oxford nanopore long reads (provided as fa.gz)
 
               -g reference sequences (suitable backbone assembly or reference genomes,
                                      ordered by evolutionary distance (most similar first), 
-                                     as comma separated list)
+                                     as comma separated list. Input format fasta or fasta.gz)
 
               -o output-prefix
 
