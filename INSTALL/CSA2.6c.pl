@@ -143,6 +143,8 @@ $COMMAND="$COMMAND
 mkdir 01_WTDBG
 cd 01_WTDBG
 ln -s ../../$ctg $out.step1.fa
+echo INPUT CONTIG STATS:
+perl $bin/seq_n50.pl $out.step1.fa
 cd ..
 ";
 
