@@ -41,8 +41,19 @@ CSA2.6/CSA2.6c.pl
 #
 # conde_root_directory_usually_homedir : has to be replace with the correct location.
 
-#TEST RUN ON YEAST (S. cerevisiae) dataset:
+#TEST RUN ON YEAST OXFORD NANOPORE dataset:
 
 mkdir CSA-TEST
 cd CSA-TEST
-wget 
+
+#DOWNLOAD TEST DATA
+wget https://nimbus.igb-berlin.de/index.php/s/njM2jqplusn17OZ/download
+mv download SRR6476833.fa.gz
+wget https://nimbus.igb-berlin.de/index.php/s/4VekUKms8tdL4V4/download
+mv download sacCer.fa.gz
+
+#CREATE CSA-PIPELINE SCRIPT
+../CSA2.6/CSA2.6c -r SRR6476833.fa.gz -g sacCer.fa.gz -t 4 -o -d > RUN-CSA-TEST.bash
+
+#RUN CSA-PIPELINE
+bash RUN-CSA-TEST.bash
