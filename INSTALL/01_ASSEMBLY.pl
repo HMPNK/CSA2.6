@@ -1,6 +1,6 @@
 #!/usr/bin/env perl
 
-#CSA version 2.6 (Chromosome Scale Assembler, employing synteny with diverged reference genomes)
+#CSA version 2.6c (Chromosome Scale Assembler, employing synteny with diverged reference genomes)
 
 #THIS SCRIPT RUNS WTDBG assembly as first step of the pipeline
 
@@ -32,7 +32,7 @@ getopts("o:r:g:t:k:s:e:m:p:", \%options);
 
 if(! $ARGV[0] && ! $options{r})       {
        print STDERR "
-CSA version 2.6 (Chromosome Scale Assembler, employing synteny with diverged reference genomes)
+CSA version 2.6c (Chromosome Scale Assembler, employing synteny with diverged reference genomes)
 Author: Heiner Kuhl, Phd (kuhl\@igb-berlin.de)
 
 THIS SCRIPT RUNS WTDBG assembly as first step of the pipeline
