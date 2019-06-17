@@ -2,6 +2,13 @@
 set -e
 set -o pipefail
 
+if -f CSA2.6c.pl;then
+    echo "INSTALLING CSA2.6c"
+    else
+    echo "You have to be in the directory where INSTALL.bash is located!!!"
+    exit;
+fi
+
 ##INSTALLS SOFTWARE USED IN CSA2.6 PIPELINE
 rm -rf bin ../bin ../script ../CSA2.6.pl
 mkdir bin
