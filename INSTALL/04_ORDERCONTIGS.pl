@@ -28,7 +28,7 @@ getopts("o:g:t:c:x:", \%options);
 
 if(! $ARGV[0] && ! $options{c})       {
        print STDERR "
-CSA version 2.6 (Chromosome Scale Assembler, employing synteny with diverged reference genomes)
+CSA version 2.6c (Chromosome Scale Assembler, employing synteny with diverged reference genomes)
 Author: Heiner Kuhl, Phd (kuhl\@igb-berlin.de)
 
 THIS SCRIPT RUNS: assembly comparisons and contig ordering
