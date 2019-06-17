@@ -78,13 +78,13 @@ $bin/lastdb -P $threads $m[-1]  $n
 
 echo;date;echo RUN WHOLE GENOME ALIGNMENT BY LAST;echo
 
-bash $script/FASTLAST.sh $contigs $m[-1] $m[-1].maf $out $queryname $threads 1000000 $dir
+bash $script/FASTLAST.sh $contigs $m[-1] $m[-1].maf $out $queryname $threads 1000000 $dir >> parallel.log 2>&1
 
 echo;date;echo RUN RAGOUT TO ORDER CONTIGS ACCORDING TO REFERENCE;echo
 
 awk 'BEGIN{print \".tree = ($out:0.01,$queryname:0.01);\\n.target = $out\\n.maf = $m[-1].maf\\n.blocks = 80000,60000,40000,20000\\n\\n$queryname.draft = true\\n$out.fasta = $contigs\"}' > $m[-1].recipe.txt
 
-$bin/RAGOUT_V1.0/ragout.py  --no-refine --overwrite -o ./RAGOUT_$m[-1] -s maf $m[-1].recipe.txt
+$bin/RAGOUT_V1.0/ragout.py  --no-refine --overwrite -o ./RAGOUT_$m[-1] -s maf $m[-1].recipe.txt >> ragout.log 2>&1
 
 #CREATE NEW SCAFFOLDS DO SOME RENAMING ETC.
 awk -v guess=$guess -f $script/ragout_link_2_tsv.awk ./RAGOUT_$m[-1]/scaffolds.links | awk '{gsub(\"scf\",\"R$c\_\",\$2);gsub(\" \",\"\\t\");print \$0}' > $out.scf$c.txt
