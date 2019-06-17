@@ -101,7 +101,7 @@ rm used$c.list unused$c.list
 
 $COMMAND="${COMMAND}
 #sort fasta by size 
-$bin/seqkit sort -lr $out.scf$c.fa > temp.fa
+$bin/seqkit sort -lr $out.scf$c.fa > temp.fa 2>/dev/null
 mv temp.fa $out.scf$c.fa
 
 echo;date;echo RUN FINAL GAP CLOSE A \\(find contig end overlaps by last and join\\);echo
