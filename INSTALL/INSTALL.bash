@@ -2,7 +2,7 @@
 set -e
 set -o pipefail
 
-if [ -f CSA2.6c.pl ]; then
+if [ -f RAGOUT_V1.0.tar.gz ]; then
     echo "INSTALLING CSA2.6c"
     else
     echo "You have to be in the directory where INSTALL.bash is located!!!"
