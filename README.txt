@@ -39,9 +39,9 @@ git clone https://github.com/HMPNK/CSA2.6.git
 # INSTALL binaries and scripts
 # !!! Make sure you have gcc, g++, make and zlib1g-dev installed on your system !!!
 # Otherwise INSTALL.bash will fail in compilation steps
-# On Ubuntu   run "sudo apt install gcc g++ make zlib1g-dev"
-# On Red Hat  run "sudo yum install gcc gcc-c++ make zlib-devel"
-# On OpenSuse run "sudo zypper install gcc gcc-c++ make zlib-devel"
+# On Ubuntu run:             "sudo apt install gcc g++ make zlib1g-dev"
+# On Red Hat /CentOS 7 run:  "sudo yum install gcc gcc-c++ make zlib-devel"
+# On OpenSuse run:           "sudo zypper install gcc gcc-c++ make zlib-devel"
 
 cd CSA2.6
 cd INSTALL
@@ -58,7 +58,7 @@ CSA2.6/CSA2.6c.pl
 # INSTALLATION ISSUES
 
 # We have tested CSA2.6c on fresh server installations of Red Hat 8 and Ubuntu 18.04/19.04,
-# OpenSuse LEAP 15.1 as well as older Red Hat and Ubuntu versions.
+# OpenSuse LEAP 15.1 and CentOS 7 as well as older Red Hat and Ubuntu versions.
 #
 # Our tests showed that RAGOUT V1.0 compilation needs gcc in version 4.6.2 or above.
 # If you encounter the following error during the processing
