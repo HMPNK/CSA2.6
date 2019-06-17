@@ -104,7 +104,7 @@ $COMMAND="${COMMAND}
 $bin/seqkit sort -lr $out.scf$c.fa > temp.fa
 mv temp.fa $out.scf$c.fa
 
-echo;date;echo RUN FINAL GAP CLOSE A (find contig end overlaps by last and join);echo
+echo;date;echo RUN FINAL GAP CLOSE A \\(find contig end overlaps by last and join\\);echo
 
 bash $script/STITCH.sh $out.scf$c.fa $dir > ../$out.final.A.fa
 mv scaffold_stitch.closed.overlaps scaffold_stitch.closed.overlaps.A; mv scaffold_stitch.skipped.overlaps scaffold_stitch.skipped.overlaps.A
@@ -126,7 +126,7 @@ rm used$c.B.list unused$c.B.list
 $bin/seqkit sort -lr $out.scf$c.B.fa > temp.fa 2>/dev/null
 mv temp.fa $out.scf$c.B.fa
 
-echo;date;echo RUN FINAL GAP CLOSE B (find contig end overlaps by last and join);echo
+echo;date;echo RUN FINAL GAP CLOSE B \\(find contig end overlaps by last and join\\);echo
 
 bash $script/STITCH.sh $out.scf$c.B.fa $dir > ../$out.final.B.fa
 mv scaffold_stitch.closed.overlaps scaffold_stitch.closed.overlaps.B; mv scaffold_stitch.skipped.overlaps scaffold_stitch.skipped.overlaps.B
