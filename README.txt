@@ -39,9 +39,10 @@ git clone https://github.com/HMPNK/CSA2.6.git
 # INSTALL binaries and scripts
 # !!! Make sure you have gcc, g++, make and zlib1g-dev installed on your system !!!
 # Otherwise INSTALL.bash will fail in compilation steps
-# On ubuntu run "sudo apt install gcc g++ make zlib1g-dev"
-# On red hat run "yum install gcc gcc-c++ make zlib-devel"
- 
+# On Ubuntu   run "sudo apt install gcc g++ make zlib1g-dev"
+# On Red Hat  run "sudo yum install gcc gcc-c++ make zlib-devel"
+# On OpenSuse run "sudo zypper install gcc gcc-c++ make zlib-devel"
+
 cd CSA2.6
 cd INSTALL
 bash INSTALL.bash
