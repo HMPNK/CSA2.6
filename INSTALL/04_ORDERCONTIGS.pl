@@ -1,6 +1,6 @@
 #!/usr/bin/env perl
 
-#CSA version 2.6 (Chromosome Scale Assembler, employing synteny with diverged reference genomes)
+#CSA version 2.6c (Chromosome Scale Assembler, employing synteny with diverged reference genomes)
 
 #THIS SCRIPT RUNS WHOLE GENOME ALIGNMENTS AND ORDERS CONTIGS
 
