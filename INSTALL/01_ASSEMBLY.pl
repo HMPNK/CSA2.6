@@ -137,7 +137,7 @@ awk '{if(\$4<1 && \$5<1) {print}}' $out.step1.LR_LRPE.bedcov| $bin/bedtools merg
 $bin/bedtools complement -g $out.step1.sizes -i $out.step1.LR_LRPE.SPLIT.bed | awk '{if(\$2<\$3){print}}' > $out.step1.LR_LRPE.CUT.bed
 sort -k1,1V -k2,2n $out.step1.LR_LRPE.SPLIT.bed $out.step1.LR_LRPE.CUT.bed | awk  '{if(\$3>\$2 && \$3-\$2>2000){print \$0\"\\t\"\$1\"_\"d[\$1]++}}' > $out.step1.LR_LRPE.GOOD.bed
 
-$bin/bedtools getfasta -bed $out.step1.LR_LRPE.GOOD.bed -fi $out.step1.fa -fo $out.step1b.fa -name
+$bin/bedtools getfasta -bed $out.step1.LR_LRPE.GOOD.bed -fi $out.step1.fa -fo $out.step1b.fa -name > /dev/null 2>&1
 mv $out.step1.fa $out.step1a.fa
 ln -s $out.step1b.fa $out.step1.fa
 
