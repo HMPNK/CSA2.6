@@ -37,10 +37,10 @@ getopts("C:S:o:r:g:t:k:s:e:d:x:m:p:", \%options);
 
 if(! $ARGV[0] && ! $options{r})       {
        print STDERR "
-CSA version 2.6 (Chromosome Scale Assembler, employing synteny with diverged reference genomes)
+CSA version 2.6c (Chromosome Scale Assembler, employing synteny with diverged reference genomes)
 Author: Heiner Kuhl, Phd (kuhl\@igb-berlin.de)
 
-THIS SCRIPT RUNS FIVE STEP CSA2 PIPELINE
+THIS SCRIPT RUNS FOUR STEP CSA2 PIPELINE
 
 INPUT DATA: pacbio or oxford nanopore long reads (provided as fa.gz)
             suitable references (scaffolded assembly, 10X Genomics assembly, diverged reference genomes)
