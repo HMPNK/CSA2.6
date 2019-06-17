@@ -170,7 +170,7 @@ $bin/bedtools getfasta -name -fi $assembly.GAPFILL.fa -fo $out.step3.fa -bed $as
 ";
 $COMMAND="$COMMAND\n#END of GAP REASSEMBLY and CLOSURE. IMPROVED CONTIGS can be found in: $out.step3.fa\n\n
 echo;echo STEP3 GAP CLOSED CONTIG STATS:
-$bin/seq_n50.pl $out.step3.fa
+perl $bin/seq_n50.pl $out.step3.fa
 echo;date;echo FINISHED CSA STEP3;echo
 
 ";
