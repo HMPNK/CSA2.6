@@ -134,6 +134,10 @@ mv scaffold_stitch.closed.overlaps scaffold_stitch.closed.overlaps.B; mv scaffol
 }
 
 $COMMAND="${COMMAND}
+echo;echo FINAL CONTIG STATS:
+$bin/seq_n50.pl ../$out.final.A.fa
+echo;echo FINAL SCAFFOLD STATS:
+$bin/seq_n50.pl ../$out.final.A.fa
 echo;date;echo FINISHED CSA STEP4, CSA COMPLETED!;echo
 \n#END of CTGORDER\n
 ";
