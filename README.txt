@@ -1,8 +1,8 @@
 # CSA-PIPELINE INSTALLATION
 
-# unpack CSA
+# 
 
-tar xvf CSA2.6c_xyz.tar.gz
+git clone CSA2.6
 
 cd CSA2.6
 
