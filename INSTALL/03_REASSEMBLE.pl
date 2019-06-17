@@ -1,6 +1,6 @@
 #!/usr/bin/env perl
 
-#CSA version 2.6 (Chromosome Scale Assembler, employing synteny with diverged reference genomes)
+#CSA version 2.6c (Chromosome Scale Assembler, employing synteny with diverged reference genomes)
 
 #THIS SCRIPT RUNS extracts reads around gaps and reassembles them locally, finally it reassembles the whole genome with the potentially gap closing contigs
 
@@ -26,7 +26,7 @@ getopts("o:r:a:t:", \%options);
 
 if(! $ARGV[0] && ! $options{r})       {
        print STDERR "
-CSA version 2.6 (Chromosome Scale Assembler, employing synteny with diverged reference genomes)
+CSA version 2.6c (Chromosome Scale Assembler, employing synteny with diverged reference genomes)
 Author: Heiner Kuhl, Phd (kuhl\@igb-berlin.de)
 
 THIS SCRIPT extracts reads mapped near gaps and runs WTDBG gap re-assembly and assembly of gap contigs with the input assembly
