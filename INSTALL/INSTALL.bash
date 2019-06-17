@@ -106,28 +106,126 @@ sed "s|$REPLACE|$NEW|g" ./04_ORDERCONTIGS.pl > ../script/04_ORDERCONTIGS.pl
 chmod 770 ../CSA2.6c.pl ../script/01_ASSEMBLY.pl ../script/02_ORDERCONTIGS.pl ../script/03_REASSEMBLE.pl ../script/04_ORDERCONTIGS.pl
 
 #TEST binaries
-#TEST binaries
-../bin/bedtools -h
-printf ">1\nACGT" | ../bin/hgFakeAgp stdin stdout
-../bin/lastal -h
-../bin/lastdb -h
-../bin/last-split -h
-../bin/maf-swap -h
-../bin/minimap2 -h
-printf "echo ABCD" | ../bin/parallel
-../bin/pigz -h
-../bin/samtools sort
-../bin/seqkit -h
-echo "ACGT" | ../bin/seqtk seq -
-../bin/wtdbg2.2/kbm2 -V
-../bin/wtdbg2.2/pgzf -V
-../bin/wtdbg2.2/wtdbg2 -V
-../bin/wtdbg2.2/wtdbg-cns -V
-../bin/wtdbg2.2/wtpoa-cns -V
-../bin/RAGOUT_V1.0/ragout.py -h
+echo "Testing binaries..........."
+echo ""
+
+if ../bin/bedtools -h >/dev/null; then
+        echo "bedtools.................ok"
+    else
+        echo "bedtools.............failed"
+fi
+
+if printf ">1\nACGT" | ../bin/hgFakeAgp stdin stdout >/dev/null; then
+        echo "hgFakeAgp................ok"
+    else
+        echo "hgFakeAgp............failed"
+fi
+
+if ../bin/lastal -h >/dev/null; then
+        echo "lastal...................ok"
+    else
+        echo "lastal...............failed"
+fi
+
+if ../bin/lastdb -h >/dev/null; then
+        echo "lastdb...................ok"
+    else
+        echo "lastdb...............failed"
+fi
+
+if ../bin/last-split -h >/dev/null; then
+        echo "last-split...............ok"
+    else
+        echo "last-split...........failed"
+fi
+
+if ../bin/maf-swap -h >/dev/null; then
+        echo "maf-swap.................ok"
+    else
+        echo "maf-swap.............failed"
+fi
+
+if ../bin/minimap2 -h >/dev/null; then
+        echo "minimap2.................ok"
+    else
+        echo "minimap2.............failed"
+fi
+
+if printf "echo ABCD" | ../bin/parallel >/dev/null 2>&1; then
+        echo "parallel.................ok"
+    else
+        echo "parallel.............failed"
+fi
+
+if ../bin/pigz -h >/dev/null 2>&1; then
+        echo "pigz.....................ok"
+    else
+        echo "pigz.................failed"
+fi
+
+if printf ">1\nacgt" | ../bin/samtools faidx -;rm ./-.fai; then
+        echo "samtools.................ok"
+    else
+        echo "samtools.............failed"
+fi
+
+if ../bin/seqkit -h >/dev/null; then
+        echo "seqkit...................ok"
+    else
+        echo "seqkit...............failed"
+fi
+
+if printf ">1\nACGT" | ../bin/seqtk seq - >/dev/null; then
+        echo "seqtk....................ok"
+    else
+        echo "seqtk................failed"
+fi
+
+if ../bin/wtdbg2.2/kbm2 -V >/dev/null; then
+        echo "kbm2.....................ok"
+    else
+        echo "kbm2.................failed"
+fi
+
+if ../bin/wtdbg2.2/pgzf -V >/dev/null; then
+        echo "pgzf.....................ok"
+    else
+        echo "pgzf.................failed"
+fi
+
+if ../bin/wtdbg2.2/wtdbg2 -V >/dev/null; then
+        echo "wtdbg2...................ok"
+    else
+        echo "wtdbg2...............failed"
+fi
+
+if ../bin/wtdbg2.2/wtdbg-cns -V >/dev/null; then
+        echo "wtdbg-cns................ok"
+    else
+        echo "wtdbg-cns............failed"
+fi
+
+if ../bin/wtdbg2.2/wtpoa-cns -V >/dev/null; then
+        echo "wtpoa-cns................ok"
+    else
+        echo "wtpoa-cns............failed"
+fi
+
+if ../bin/RAGOUT_V1.0/ragout.py -h >/dev/null; then
+        echo "ragout.py................ok"
+    else
+        echo "ragout.py............failed"
+fi
+
 touch test.maf
-../bin/RAGOUT_V1.0/lib/ragout-maf2synteny test.maf MAF test.maf 100 1000
+if ../bin/RAGOUT_V1.0/lib/ragout-maf2synteny test.maf MAF test.maf 100 1000 >/dev/null 2>&1; then
+        echo "ragout-maf2synteny.......ok"
+    else
+        echo "ragout-maf2synteny...failed"
+fi
 rm test.maf MAF -rf
+
+echo ""
 
 ##FINISH
 echo "#######################################"
