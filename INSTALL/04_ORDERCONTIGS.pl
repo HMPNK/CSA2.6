@@ -104,14 +104,17 @@ $COMMAND="${COMMAND}
 $bin/seqkit sort -lr $out.scf$c.fa > temp.fa
 mv temp.fa $out.scf$c.fa
 
-#RUN FINAL GAP CLOSE (find contig end overlaps by blast and join)
+echo;date;echo RUN FINAL GAP CLOSE A (find contig end overlaps by last and join);echo
+
 bash $script/STITCH.sh $out.scf$c.fa $dir > ../$out.final.A.fa
 mv scaffold_stitch.closed.overlaps scaffold_stitch.closed.overlaps.A; mv scaffold_stitch.skipped.overlaps scaffold_stitch.skipped.overlaps.A
 ";
 if($guess eq "off") {
 if($c>1) { $c=$c-1; $contigs="$out.scf$c.fa"; } else { $contigs=$contigs2; };
 $COMMAND="${COMMAND}
-#CREATE ASSEMBLY B using RAGOUTS guessed edges
+
+echo;date;echo CREATE ASSEMBLY B using RAGOUTS guessed edges;echo
+
 awk -v guess=on -f $script/ragout_link_2_tsv.awk ./RAGOUT_$m[-1]/scaffolds.links | awk '{gsub(\"scf\",\"R$c\_\",\$2);gsub(\" \",\"\\t\");print \$0}' > $out.scf$c.B.txt
 $bin/seqtk seq -l 0 $contigs | perl $script/write_scaffolds.pl /dev/stdin $out.scf$c.B.txt | $bin/seqtk seq -l 100 - > $out.scf$c.B.fa
 cut -f 4 $out.scf$c.B.txt > used$c.B.list
@@ -123,7 +126,8 @@ rm used$c.B.list unused$c.B.list
 $bin/seqkit sort -lr $out.scf$c.B.fa > temp.fa
 mv temp.fa $out.scf$c.B.fa
 
-echo;date;echo RUN FINAL GAP CLOSE (find contig end overlaps by blast and join);echo
+echo;date;echo RUN FINAL GAP CLOSE B (find contig end overlaps by last and join);echo
+
 bash $script/STITCH.sh $out.scf$c.B.fa $dir > ../$out.final.B.fa
 mv scaffold_stitch.closed.overlaps scaffold_stitch.closed.overlaps.B; mv scaffold_stitch.skipped.overlaps scaffold_stitch.skipped.overlaps.B
 ";
