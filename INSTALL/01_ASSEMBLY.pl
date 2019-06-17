@@ -89,7 +89,7 @@ printf \"$wtdbg/$cons -i $out-WTDBG.ctg.lay.gz -f -t $threads2 -o $out-wtdbg.fa 
 
 echo;date;echo COMPARE ASSEMBLIES AND SPLIT CONTIGS AT DIFFERENCES;echo
 
-$bin/minimap2 -t $threads -x asm5 $out-wtdbg.fa $out-wtdbg_2.fa > $out-wtdbg_1vs2.paf
+$bin/minimap2 -t $threads -x asm5 $out-wtdbg.fa $out-wtdbg_2.fa > $out-wtdbg_1vs2.paf 2>1vs2.minimap.log
 awk '{if(\$12>=60 && \$9-\$8 > 30000){print \$1\"\\t\"\$6\"\\t\"\$8\"\\t\"\$9}}' $out-wtdbg_1vs2.paf| sort -k2,2V -k3,3n -k4,4n| awk '{if(\$2==oq && \$1!=oR){n=split(ol,d,\"\\t\");if(d[n]<=\$3){print \$2\"\\t\"d[n]\"\\t\"\$3} else {print \$2\"\\t\"\$3\"\\t\"d[n]}};oR=\$1;oq=\$2;ol=\$0}' > $out-wtdbg.fa.SPLIT.bed
 
 if [ -s $out-wtdbg.fa.SPLIT.bed ]
