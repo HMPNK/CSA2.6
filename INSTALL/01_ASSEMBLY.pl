@@ -143,6 +143,8 @@ ln -s $out.step1b.fa $out.step1.fa
 
 ";
 $COMMAND="$COMMAND\n#END of WTDBG on $reads. Contigs can be found in $out-wtdbg.fa\n\n
+echo "PRIMARY CONTIG STATS:
+$bin/seq_n50.pl $out-wtdbg.fa
 echo;date;echo FINISHED CSA STEP1;echo
 ";
 print "$COMMAND\n";
