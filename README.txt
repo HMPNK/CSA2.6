@@ -1,6 +1,11 @@
 # CSA-PIPELINE INSTALLATION
-
-# 
+#
+# THIRD PARTY OPEN SOURCE SOFTWARE USED (will be installed automatically by INSTALL.bash):
+#
+# Miniconda, wtdbg2.2, RAGOUT v1.0, Minimap2, last aligner v941, bedtools v2.27.1,
+# samtools v1.7, pigz, GNU parallel, seqtk, seqkit, hgFakeAgp
+#
+# We deeply acknowledge the authors of these great tools! 
 
 git clone https://github.com/HMPNK/CSA2.6.git
 
