@@ -123,7 +123,7 @@ $bin/seqtk seq -l 0 $contigs | grep -A 1 -w -F -f unused$c.B.list| grep -vw ^\\-
 rm used$c.B.list unused$c.B.list
 
 #sort fasta by size
-$bin/seqkit sort -lr $out.scf$c.B.fa > temp.fa
+$bin/seqkit sort -lr $out.scf$c.B.fa > temp.fa 2>/dev/null
 mv temp.fa $out.scf$c.B.fa
 
 echo;date;echo RUN FINAL GAP CLOSE B (find contig end overlaps by last and join);echo
