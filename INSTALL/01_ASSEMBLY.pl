@@ -84,7 +84,7 @@ $wtdbg/wtdbg2 -t $threads -i $reads -o $out-WTDBG_2 --load-alignments $out-WTDBG
 echo;date;echo CREATE CONSENSUS / use $cons;echo
 
 
-printf \"$wtdbg/$cons -i $out-WTDBG.ctg.lay.gz -f -t $threads2 -o $out-wtdbg.fa 2>>$out-wtdbg.log \\n $wtdbg/$cons -i $out-WTDBG_2.ctg.lay.gz -f -t $threads2 -o $out-wtdbg_2.fa 2>>$out-wtdbg.log\" | $bin/parallel -j 2
+printf \"$wtdbg/$cons -i $out-WTDBG.ctg.lay.gz -f -t $threads2 -o $out-wtdbg.fa 2>>$out-wtdbg.log \\n $wtdbg/$cons -i $out-WTDBG_2.ctg.lay.gz -f -t $threads2 -o $out-wtdbg_2.fa 2>>$out-wtdbg.log\" | $bin/parallel -j 2 > parallel.log 2>&1
 
 
 echo;date;echo COMPARE ASSEMBLIES AND SPLIT CONTIGS AT DIFFERENCES;echo
@@ -119,7 +119,7 @@ echo;date;echo ASSEMBLY IMPROVEMENTS BY READ RE-MAPPING AND SPLITTING;echo
 
 #MAP LRs and LRPEs
 
-printf \"$bin/minimap2 -t $threads2 -x map-pb $out.step1.fa $reads > $out.step1.LR.paf 2>LR.log \\n $bin/pigz -dc $reads | $bin/seqtk seq -l 0 - | awk -f $script/EOF_LR.awk | $bin/minimap2 -t $threads2 -x sr -k19 -w10 -a $out.step1.fa - 2>LRPE.log | $bin/samtools view -Sb -@ 6 - > $out.step1.LRPE.bam\" | $bin/parallel -j 2
+printf \"$bin/minimap2 -t $threads2 -x map-pb $out.step1.fa $reads > $out.step1.LR.paf 2>LR.log \\n $bin/pigz -dc $reads | $bin/seqtk seq -l 0 - | awk -f $script/EOF_LR.awk | $bin/minimap2 -t $threads2 -x sr -k19 -w10 -a $out.step1.fa - 2>LRPE.log | $bin/samtools view -Sb -@ 6 - > $out.step1.LRPE.bam\" | $bin/parallel -j 2 >> parallel.log 2>&1
 
 
 #Get genome coverage by best matches of LRs:
