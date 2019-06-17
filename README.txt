@@ -13,7 +13,8 @@
 
 # The pipeline can use information from scaffolded assemblies (for example from HiC or
 # 10X Genomics), or even from diverged (~65-100 Mya) reference genomes for ordering the
-# contigs and thus support the assembly process.
+# contigs and thus support the assembly process. This typically results in improved 
+# contig N50 when compared to current state of the art methods.
 
 # For smaller vertebrate genomes (~1 Gbp) chromosome scale assemblies can be achieved 
 # within 12h on high-end Desktop computers (Intel i7, 12 CPU threads, 128 GB RAM). 
