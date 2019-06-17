@@ -4,7 +4,7 @@
 
 tar xvf CSA2.6c_xyz.tar.gz
 
-cd CSA2.6c
+cd CSA2.6
 
 # INSTALL binaries and scripts
 # !!! Make sure you have gcc, g++, make and zlib1g-dev installed on your system !!!
