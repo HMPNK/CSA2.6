@@ -81,7 +81,7 @@ wget https://nimbus.igb-berlin.de/index.php/s/4VekUKms8tdL4V4/download
 mv download sacCer.fa.gz
 
 #CREATE CSA-PIPELINE SCRIPT
-../CSA2.6/CSA2.6c -r SRR6476833.fa.gz -g sacCer.fa.gz -t 4 -o -d > RUN-CSA-TEST.bash
+../CSA2.6/CSA2.6c.pl -r SRR6476833.fa.gz -g sacCer.fa.gz -t 4 -o SC_CSA -d SC_CSA > RUN-CSA-TEST.bash
 
 #RUN CSA-PIPELINE
 bash RUN-CSA-TEST.bash
