@@ -97,7 +97,7 @@ $bin/pigz -dc $reads | $bin/seqtk seq -l 0 - | awk -v infile=$assembly.reads_to_
 echo;date;echo RUN LOCAL ASSEMBLIES;echo
 wc -l *gap*fasta *start*fasta *end*fasta| sort -k1,1rn |awk '{i++;if(\$1>=4 && i>1){print \"sh $script/wtdbg-BATCH.sh \"\$2\" $wtdbg\/\"}}' > $assembly.wtdbg-BATCH-ALL-RUNS.sh
 #run local reassemblies in parallel, timeout is now implemented in wtdbg-BATCH.sh -> sometimes happens with problematic repeats
-cat $assembly.wtdbg-BATCH-ALL-RUNS.sh| $bin/parallel -j $threads
+cat $assembly.wtdbg-BATCH-ALL-RUNS.sh| $bin/parallel -j $threads > parallel.log 2>&1
 
 #merge contigs
 cat *gap*wtdbg*fa *start*wtdbg*fa *end*wtdbg*fa> $assembly.GAP_HELPERS.fa
@@ -146,7 +146,7 @@ $wtdbg/wtdbg-cns -i $assembly.GAPFILL-WTDBG.ctg.lay.gz -S 0 -f -t $threads -o $a
 
 echo;date;echo DO SOME CHECKS AND REMOVE POTENTIAL MISSASSEMBLIES;echo
 
-$bin/minimap2 -t $threads -x asm5 $assembly.GAPFILL.fa $assembly > $assembly.GAPFILL.paf
+$bin/minimap2 -t $threads -x asm5 $assembly.GAPFILL.fa $assembly > $assembly.GAPFILL.paf 2>>$assembly.minimap2.log
 #INTERSCAFFOLD
 awk '{if(\$12>=60 && \$9-\$8 > 50000){print \$1\"\\t\"\$6\"\\t\"\$8\"\\t\"\$9}}' $assembly.GAPFILL.paf| sort -k2,2V -k3,3n -k4,4n| grep -v ^ctg|awk '{if(\$2==oq && \$1!=oR){n=split(ol,d,\"\\t\");if(d[n]<=\$3){print \$2\"\\t\"d[n]\"\\t\"\$3} else {print \$2\"\\t\"\$3\"\\t\"d[n]}};oR=\$1;oq=\$2;ol=\$0}' | awk '{if(\$2<=\$3){print;} else{print \$1\"\\t\"\$3\"\\t\"\$2;}}' > $assembly.GAPFILL.SPLIT.bed
 #INTRASCAFFOLD
