@@ -169,7 +169,8 @@ sort -k1,1V -k2,2n $assembly.GAPFILL.SPLIT.bed $assembly.GAPFILL.GOOD.bed | awk 
 $bin/bedtools getfasta -name -fi $assembly.GAPFILL.fa -fo $out.step3.fa -bed $assembly.GAPFILL.REGIONS.bed > /dev/null 2>&1
 ";
 $COMMAND="$COMMAND\n#END of GAP REASSEMBLY and CLOSURE. IMPROVED CONTIGS can be found in: $out.step3.fa\n\n
-
+echo;echo STEP3 GAP CLOSED CONTIG STATS:
+$bin/seq_n50.pl $out.step3.fa
 echo;date;echo FINISHED CSA STEP3;echo
 
 ";
