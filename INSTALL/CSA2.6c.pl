@@ -121,6 +121,10 @@ my $COMMAND="#!/usr/bash\nset -e\nset -o pipefail\n\n";
 $COMMAND="$COMMAND\n#RUN CSA2.6 assembly pipeline:\n\n";
 
 $COMMAND="$COMMAND
+
+export PATH=$bin/RAGOUT_V1.0/lib:\$PATH
+export PYTHONPATH=$bin/RAGOUT_V1.0/lib
+
 mkdir $rundir
 cd $rundir
 ";
