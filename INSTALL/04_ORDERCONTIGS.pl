@@ -135,7 +135,7 @@ mv scaffold_stitch.closed.overlaps scaffold_stitch.closed.overlaps.B; mv scaffol
 
 $COMMAND="${COMMAND}
 echo;echo FINAL CONTIG STATS:
-$bin/hgFakeAgp ../$out.final.A.fa /dev/stdout | awk '{if(\$5==\"D\") {print \$1\"\\t\"\$2-1\"\\t\"$3}}'| $bin/bedtools getfasta -bed /dev/stdin -fi ../$out.final.A.fa -fo /dev/stdout 2>/dev/null | perl $bin/seq_n50.pl 
+$bin/hgFakeAgp ../$out.final.A.fa /dev/stdout | awk '{if(\$5==\"D\") {print \$1\"\\t\"\$2-1\"\\t\"\$3}}'| $bin/bedtools getfasta -bed /dev/stdin -fi ../$out.final.A.fa -fo /dev/stdout 2>/dev/null | perl $bin/seq_n50.pl 
 echo;echo FINAL SCAFFOLD STATS:
 perl $bin/seq_n50.pl ../$out.final.A.fa
 echo;date;echo FINISHED CSA STEP4, CSA COMPLETED!;echo
