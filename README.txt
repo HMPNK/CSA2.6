@@ -19,7 +19,7 @@ bash INSTALL.bash
 # RUN CSA2.6 PIPELINE
 
 cd ../..
-CSA2.6c/CSA2.6c.pl
+CSA2.6/CSA2.6c.pl
 
 
 # INSTALLATION ISSUES
