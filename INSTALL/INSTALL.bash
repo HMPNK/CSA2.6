@@ -89,7 +89,7 @@ make
 rm *.h *.c
 cd ..
 mv wtdbg2-2.2 bin/wtdbg2.2
-ln -s bin/wtdbg2.2/script/seq_n50.pl bin/seq_n50.pl
+ln -s ./wtdbg2.2/script/seq_n50.pl bin/seq_n50.pl
 
 ##RAGOUT_V1.0 (old version performs better, if it does not compile try "module load compiler/gcc-7.2.0")
 tar xvf RAGOUT_V1.0.tar.gz
