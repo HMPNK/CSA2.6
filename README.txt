@@ -2,7 +2,7 @@
 
 # 
 
-git clone CSA2.6
+git clone https://github.com/HMPNK/CSA2.6.git
 
 cd CSA2.6
 
