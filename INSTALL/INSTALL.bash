@@ -12,6 +12,7 @@ if hash conda 2>/dev/null; then
         echo "Conda is already available on your system. Proceeding..."
     else
         echo "conda is not available. First installing miniconda! Install to your home directory: $HOME ! Always answer \"yes\""
+        wget https://repo.anaconda.com/miniconda/Miniconda2-latest-Linux-x86_64.sh
         sh ./Miniconda2-latest-Linux-x86_64.sh
         . ~/.bashrc
         echo "Conda is now available on your system. You might have to logout,login and restart INSTALL.bash. Trying to proceed..."
