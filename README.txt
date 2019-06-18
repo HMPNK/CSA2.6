@@ -68,9 +68,9 @@ CSA2.6/CSA2.6c.pl
 #
 # you have to add the correct perl lib location to your PERL5LIB environment variable
 #
-# export  PERL5LIB=/conde_root_directory_usually_homedir/.conda/pkgs/perl-5.22.0.1-0/lib/perl5:$PERL5LIB
+# export  PERL5LIB=/conda_root_directory_usually_homedir/.conda/pkgs/perl-5.22.0.1-0/lib/perl5:$PERL5LIB
 #
-# conde_root_directory_usually_homedir : has to be replace with the correct location.
+# conda_root_directory_usually_homedir : has to be replaced with the correct location.
 
 #TEST RUN ON YEAST OXFORD NANOPORE dataset:
 
