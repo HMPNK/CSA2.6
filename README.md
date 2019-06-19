@@ -38,16 +38,14 @@ comparisons with publicly available diverged reference genomes for Fish, Birds a
 ```sh
 git clone https://github.com/HMPNK/CSA2.6.git
 ```
- INSTALL binaries and scripts
- !!! Make sure you have gcc, g++, make and zlib1g-dev installed on your system !!!
- Otherwise INSTALL.bash will fail in compilation steps
+ Make sure you have gcc, g++, make and zlib1g-dev installed on your system !!!
+ Otherwise INSTALL.bash will fail in compilation steps.
 
  On Ubuntu run:
  ```sh
  sudo apt install gcc g++ make zlib1g-dev
  ```
- 
- On Red Hat /CentOS 7 run:
+  On Red Hat /CentOS 7 run:
 ```sh
 sudo yum install gcc gcc-c++ make zlib-devel
 ```
@@ -55,7 +53,7 @@ sudo yum install gcc gcc-c++ make zlib-devel
  ```sh
  sudo zypper install gcc gcc-c++ make zlib-devel
 ```
-
+INSTALL CSA binaries and scripts!!! 
 ```sh
 cd CSA2.6
 cd INSTALL
