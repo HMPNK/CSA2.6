@@ -24,10 +24,7 @@ Larger mammalian genomes (~3Gbp) can be processed within 15-18 h on server equip
 CSA can calculate (near) chromosomal scale assemblies from long read data and 
 comparisons with publicly available diverged reference genomes for Fish, Birds and Mammals.
 
-<p>
-    <img src="Fig1.png" width="800" height="600" />
-</p>
-
+![CSA-PIPELINE](https://github.com/HMPNK/CSA2.6/blob/master/Fig1.png)
 # CSA-PIPELINE INSTALLATION
 
  THIRD PARTY OPEN SOURCE SOFTWARE USED (will be installed automatically by INSTALL.bash):
