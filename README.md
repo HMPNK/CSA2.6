@@ -25,7 +25,7 @@ CSA can calculate (near) chromosomal scale assemblies from long read data and
 comparisons with publicly available diverged reference genomes for Fish, Birds and Mammals.
 
 <p>
-    <img src="../blob/master/Fig1.png" width="220" height="240" />
+    <img src="blob/master/Fig1.png" width="220" height="240" />
 </p>
 
 # CSA-PIPELINE INSTALLATION
