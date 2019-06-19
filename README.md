@@ -35,36 +35,41 @@ comparisons with publicly available diverged reference genomes for Fish, Birds a
 
  We deeply acknowledge the authors of these great tools! 
 
-## <a name="install"></a>
-
+```sh
 git clone https://github.com/HMPNK/CSA2.6.git
-
+```
  INSTALL binaries and scripts
  !!! Make sure you have gcc, g++, make and zlib1g-dev installed on your system !!!
  Otherwise INSTALL.bash will fail in compilation steps
- 
- On Ubuntu run:             "sudo apt install gcc g++ make zlib1g-dev"
- 
- On Red Hat /CentOS 7 run:  "sudo yum install gcc gcc-c++ make zlib-devel"
- 
- On OpenSuse run:           "sudo zypper install gcc gcc-c++ make zlib-devel"
 
+ On Ubuntu run:
+ ```sh
+ sudo apt install gcc g++ make zlib1g-dev
+ ```
+ 
+ On Red Hat /CentOS 7 run:
+```sh
+sudo yum install gcc gcc-c++ make zlib-devel
+```
+ On OpenSuse run:
+ ```sh
+ sudo zypper install gcc gcc-c++ make zlib-devel
+```
+
+```sh
 cd CSA2.6
-
 cd INSTALL
-
 bash INSTALL.bash
-
+```
  INITIALIZE MINICONDA ENVIRONMENT, ALTERNATIVELY YOU MAY JUST LOGOUT and LOGIN 
-
+```sh
 . ~/.bashrc
-
+```
  RUN CSA2.6 PIPELINE
-
+```sh
 cd ../..
-
 CSA2.6/CSA2.6c.pl
-
+```
  INSTALLATION ISSUES
 
  We have tested CSA2.6c on fresh server installations of Red Hat 8 and Ubuntu 18.04/19.04,
@@ -77,33 +82,29 @@ CSA2.6/CSA2.6c.pl
  symbol: Perl_Istack_sp_ptr" 
 
  you have to add the correct perl lib location to your PERL5LIB environment variable
-
+```sh
  export  PERL5LIB=/conda_root_directory_usually_homedir/.conda/pkgs/perl-5.22.0.1-0/lib/perl5:$PERL5LIB
-
+```
  conda_root_directory_usually_homedir : has to be replaced with the correct location.
 
 # TEST RUN ON YEAST OXFORD NANOPORE dataset:
-
+```sh
 mkdir CSA-TEST
-
 cd CSA-TEST
-
+```
 DOWNLOAD TEST DATA
-
+```sh
 wget https://nimbus.igb-berlin.de/index.php/s/njM2jqplusn17OZ/download
-
 mv download SRR6476833.fa.gz
-
 wget https://nimbus.igb-berlin.de/index.php/s/4VekUKms8tdL4V4/download
-
 mv download sacCer.fa.gz
-
+```
 CREATE CSA-PIPELINE SCRIPT
-
+```sh
 ../CSA2.6/CSA2.6c.pl -r SRR6476833.fa.gz -g sacCer.fa.gz -t 4 -o SC_CSA -d SC_CSA > RUN-CSA-TEST.bash
-
+```
 #RUN CSA-PIPELINE
-
+```sh
 bash RUN-CSA-TEST.bash
-
+```
 The test run will take about 30-60 min (you can speed it up by increasing "-t 4" on systems with higher CPU number)
