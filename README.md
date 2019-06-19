@@ -45,7 +45,9 @@ git clone https://github.com/HMPNK/CSA2.6.git
  On OpenSuse run:           "sudo zypper install gcc gcc-c++ make zlib-devel"
 
 cd CSA2.6
+
 cd INSTALL
+
 bash INSTALL.bash
 
  INITIALIZE MINICONDA ENVIRONMENT, ALTERNATIVELY YOU MAY JUST LOGOUT and LOGIN 
@@ -54,6 +56,7 @@ bash INSTALL.bash
  RUN CSA2.6 PIPELINE
 
 cd ../..
+
 CSA2.6/CSA2.6c.pl
 
  INSTALLATION ISSUES
@@ -76,6 +79,7 @@ CSA2.6/CSA2.6c.pl
 # TEST RUN ON YEAST OXFORD NANOPORE dataset:
 
 mkdir CSA-TEST
+
 cd CSA-TEST
 
 DOWNLOAD TEST DATA
