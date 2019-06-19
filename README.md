@@ -1,4 +1,5 @@
-# Chromosome Scale Assembler: A high-throughput chromosome scale genome assembly pipeline for vertebrate genomes.
+# Chromosome Scale Assembler: 
+# A high-throughput chromosome scale genome assembly pipeline for vertebrate genomes.
 
 Genome assembly of vertebrate genomes has improved much since long read technologies 
 approach read lengths larger than most repetitive elements.
