@@ -35,6 +35,8 @@ comparisons with publicly available diverged reference genomes for Fish, Birds a
 
  We deeply acknowledge the authors of these great tools! 
 
+## <a name="install"></a>
+
 git clone https://github.com/HMPNK/CSA2.6.git
 
  INSTALL binaries and scripts
