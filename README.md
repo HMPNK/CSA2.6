@@ -81,8 +81,11 @@ cd CSA-TEST
 DOWNLOAD TEST DATA
 
 wget https://nimbus.igb-berlin.de/index.php/s/njM2jqplusn17OZ/download
+
 mv download SRR6476833.fa.gz
+
 wget https://nimbus.igb-berlin.de/index.php/s/4VekUKms8tdL4V4/download
+
 mv download sacCer.fa.gz
 
 CREATE CSA-PIPELINE SCRIPT
