@@ -1,3 +1,5 @@
+![CSA](https://github.com/HMPNK/CSA2.6/blob/master/Fig1.png)
+
 # Chromosome Scale Assembler: 
 # A high-throughput chromosome scale genome assembly pipeline for vertebrate genomes.
 
@@ -24,7 +26,6 @@
 # CSA can calculate (near) chromosomal scale assemblies from long read data and 
 # comparisons with publicly available diverged reference genomes for Fish, Birds and Mammals.
 
-![CSA](https://github.com/HMPNK/CSA2.6/blob/master/Fig1.png)
 
 # CSA-PIPELINE INSTALLATION
 #
