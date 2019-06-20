@@ -101,8 +101,11 @@ CREATE CSA-PIPELINE SCRIPT
 ```sh
 ../CSA2.6/CSA2.6c.pl -r SRR6476833.fa.gz -g sacCer.fa.gz -t 4 -o SC_CSA -d SC_CSA > RUN-CSA-TEST.bash
 ```
-#RUN CSA-PIPELINE
+RUN CSA-PIPELINE
 ```sh
 bash RUN-CSA-TEST.bash
 ```
 The test run will take about 30-60 min (you can speed it up by increasing "-t 4" on systems with higher CPU number)
+
+# FUNDING
+This work was funded by the German Research foundation (DFG) “eigene Stelle” grant within the project KU 3596/1-1; project number: 324050651.
