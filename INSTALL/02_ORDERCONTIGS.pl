@@ -72,9 +72,15 @@ foreach my $n (@refcnt) {
 
 $COMMAND="${COMMAND}
 
+echo;date;echo MASKING REFERENCE BY SELF-ALIGNMENT;echo
+
+$bin/minimap2 -X -x asm5 -t $threads $n $n > $m[-1].SELF.paf 2>self-minimap.log
+awk '{n=split(\$16,d,\":\");if(d[n]<=0.025){print \$1\"\\t\"\$3\"\\t\"\$4\"\\n\"\$6\"\\t\"\$8\"\\t\"\$9}}' $m[-1].SELF.paf | sort --buffer-size=16G --temporary-directory=./ -k1,1V -k2,2n | $bin/bedtools merge -d 100 -i - > $m[-1].mask.bed
+$bin/seqtk seq $n | $bin/bedtools maskfasta -fi /dev/stdin -bed $m[-1].mask.bed -fo $m[-1].mask.fa
+
 echo;date;echo CREATE LAST DATABASE FOR WHOLE GENOME ALIGNMENT;echo
 
-$bin/lastdb -P $threads $m[-1]  $n
+$bin/lastdb -P $threads $m[-1]  $m[-1].mask.fa
 
 echo;date;echo RUN WHOLE GENOME ALIGNMENT BY LAST;echo
 

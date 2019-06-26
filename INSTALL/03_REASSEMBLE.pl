@@ -148,9 +148,12 @@ echo;date;echo DO SOME CHECKS AND REMOVE POTENTIAL MISSASSEMBLIES;echo
 
 $bin/minimap2 -t $threads -x asm5 $assembly.GAPFILL.fa $assembly > $assembly.GAPFILL.paf 2>>$assembly.minimap2.log
 #INTERSCAFFOLD
-awk '{if(\$12>=60 && \$9-\$8 > 50000){print \$1\"\\t\"\$6\"\\t\"\$8\"\\t\"\$9}}' $assembly.GAPFILL.paf| sort -k2,2V -k3,3n -k4,4n| grep -v ^ctg|awk '{if(\$2==oq && \$1!=oR){n=split(ol,d,\"\\t\");if(d[n]<=\$3){print \$2\"\\t\"d[n]\"\\t\"\$3} else {print \$2\"\\t\"\$3\"\\t\"d[n]}};oR=\$1;oq=\$2;ol=\$0}' | awk '{if(\$2<=\$3){print;} else{print \$1\"\\t\"\$3\"\\t\"\$2;}}' > $assembly.GAPFILL.SPLIT.bed
+awk '{if(\$12>=60 && \$9-\$8 > 35000){print \$1\"\\t\"\$6\"\\t\"\$8\"\\t\"\$9}}' $assembly.GAPFILL.paf| sort -k2,2V -k3,3n -k4,4n| grep -v ^ctg|awk '{if(\$2==oq && \$1!=oR){n=split(ol,d,\"\\t\");if(d[n]<=\$3){print \$2\"\\t\"d[n]\"\\t\"\$3} else {print \$2\"\\t\"\$3\"\\t\"d[n]}};oR=\$1;oq=\$2;ol=\$0}' | awk '{if(\$2<=\$3){print;} else{print \$1\"\\t\"\$3\"\\t\"\$2;}}' > $assembly.GAPFILL.SPLIT.bed
 #INTRASCAFFOLD
-awk '{if(\$12>=60 && \$9-\$8 > 50000){if(\$5==\"+\"){print \$1\"\\t\"\$6\"\\t\"\$8\"\\t\"\$9\"\\t\"\$3\"\\t\"\$4\"\\t\"\$5} else if(\$5==\"-\"){print \$1\"\\t\"\$6\"\\t\"\$8\"\\t\"\$9\"\\t\"\$4\"\\t\"\$3\"\\t\"\$5}}}' $assembly.GAPFILL.paf|grep -v ^ctg|sort -k2,2V -k3,3n -k4,4n|awk '{if(o1==\$1 && o2==\$2){split(l,d,\"\\t\"); print \$1\"\\t\"\$2\"\\t\"d[4]\"\\t\"\$3\"\\t\"d[6]\"\\t\"\$5\"\\t\"\$7\"\\tGAP\\t\"\$3-d[4]\"\\t\"\$5-d[6]};print;o1=\$1;o2=\$2;l=\$0}'|awk '{if(\$10^2>60000^2 || \$9^2>60000^2 && \$0!=\"\"){if((\$9/\$10)^2>10^2 || (\$10/\$9)^2>10^2)print \$0}}'| cut -f 2-4 | awk '{if(\$2<=\$3){print;} else{print \$1\"\\t\"\$3\"\\t\"\$2;}}' >> $assembly.GAPFILL.SPLIT.bed
+awk '{if(\$12>=60 && \$9-\$8 > 35000){if(\$5==\"+\"){print \$1\"\\t\"\$6\"\\t\"\$8\"\\t\"\$9\"\\t\"\$3\"\\t\"\$4\"\\t\"\$5} else if(\$5==\"-\"){print \$1\"\\t\"\$6\"\\t\"\$8\"\\t\"\$9\"\\t\"\$4\"\\t\"\$3\"\\t\"\$5}}}' $assembly.GAPFILL.paf|grep -v ^ctg|sort -k2,2V -k3,3n -k4,4n|awk '{if(o1==\$1 && o2==\$2){split(l,d,\"\\t\"); print \$1\"\\t\"\$2\"\\t\"d[4]\"\\t\"\$3\"\\t\"d[6]\"\\t\"\$5\"\\t\"\$7\"\\tGAP\\t\"\$3-d[4]\"\\t\"\$5-d[6]};print;o1=\$1;o2=\$2;l=\$0}'|awk '{if(\$10^2>60000^2 || \$9^2>60000^2 && \$0!=\"\"){if((\$9/\$10)^2>10^2 || (\$10/\$9)^2>10^2)print \$0}}'| cut -f 2-4 | awk '{if(\$2<=\$3){print;} else{print \$1\"\\t\"\$3\"\\t\"\$2;}}' >> $assembly.GAPFILL.SPLIT.bed
+#CONTIG ENDS
+awk '{if(\$12>=60 && \$9-\$8 > 35000){print \$1\"\\t\"\$6\"\\t\"\$8\"\\t\"\$9}}' $assembly.GAPFILL.paf | sort -k2,2V -k3,3n -k4,4n| awk '{i++;h[i]=\$0} END{for(x=1;x<=i;x++){n1=split(h[x-1],a,\"\\t\");n2=split(h[x],b,\"\\t\");n3=split(h[x+1],c,\"\\t\");if(substr(b[1],1,3)==\"ctg\" && b[2]==c[2] && a[2]!=b[2]) {print b[2]\"\\t\"b[4]\"\\t\"c[3]} else if(substr(b[1],1,3)==\"ctg\" && a[2]==b[2] && b[2]!=c[2]) {print b[2]\"\\t\"a[4]\"\\t\"b[3]}}}' | awk '{if(\$2<=\$3){print;} else{print \$1\"\\t\"\$3\"\\t\"\$2;}}' >> $assembly.GAPFILL.SPLIT.bed
+
 sort -k1,1V -k2,2n -k3,3rn $assembly.GAPFILL.SPLIT.bed > temp
 mv temp $assembly.GAPFILL.SPLIT.bed
 
@@ -165,7 +168,7 @@ cut -f 1,2 $assembly.GAPFILL.fa.fai > $assembly.GAPFILL.sizes
 awk '{print \$1\"\\t0\\t\"\$2}' $assembly.GAPFILL.sizes > $assembly.GAPFILL.GOOD.bed
 fi
 
-sort -k1,1V -k2,2n $assembly.GAPFILL.SPLIT.bed $assembly.GAPFILL.GOOD.bed | awk '{print \$0\"\\t\"\$1\"_\"x[\$1]++}' > $assembly.GAPFILL.REGIONS.bed
+sort -k1,1V -k2,2n $assembly.GAPFILL.SPLIT.bed $assembly.GAPFILL.GOOD.bed | awk '{if(\$3-\$2>=5000){print \$0\"\\t\"\$1\"_\"x[\$1]++}}' > $assembly.GAPFILL.REGIONS.bed
 $bin/bedtools getfasta -name -fi $assembly.GAPFILL.fa -fo $out.step3.fa -bed $assembly.GAPFILL.REGIONS.bed > /dev/null 2>&1
 ";
 $COMMAND="$COMMAND\n#END of GAP REASSEMBLY and CLOSURE. IMPROVED CONTIGS can be found in: $out.step3.fa\n\n
