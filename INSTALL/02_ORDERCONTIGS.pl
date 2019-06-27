@@ -88,7 +88,7 @@ bash $script/FASTLAST.sh $contigs $m[-1] $m[-1].maf $out $queryname $threads 100
 
 echo;date;echo RUN RAGOUT TO ORDER CONTIGS ACCORDING TO REFERENCE;echo
 
-awk 'BEGIN{print \".tree = ($out:0.01,$queryname:0.01);\\n.target = $out\\n.maf = $m[-1].maf\\n.blocks = 160000,80000,40000,20000\\n\\n$queryname.draft = true\\n$out.fasta = $contigs\"}' > $m[-1].recipe.txt
+awk 'BEGIN{print \".tree = ($out:0.01,$queryname:0.01);\\n.target = $out\\n.maf = $m[-1].maf\\n.blocks = 160000,80000,40000,20000,10000,5000\\n\\n$queryname.draft = true\\n$out.fasta = $contigs\"}' > $m[-1].recipe.txt
 
 $bin/RAGOUT_V1.0/ragout.py  --no-refine --overwrite -o ./RAGOUT_$m[-1] -s maf $m[-1].recipe.txt >> ragout.log 2>&1
 
