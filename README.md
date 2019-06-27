@@ -107,5 +107,8 @@ bash RUN-CSA-TEST.bash
 ```
 The test run will take about 30-60 min (you can speed it up by increasing "-t 4" on systems with higher CPU number)
 
+You may see a few "core dumps", these are single gap re-assembly jobs that failed, you should just not care. Some gap re-assembly jobs may run very long due to huge read pile ups in that location, therefore we force gap re-assemblies to stop after 20 minutes using "timeout".
+
+
 # FUNDING
 This work was funded by the German Research foundation (DFG) “eigene Stelle” grant within the project KU 3596/1-1; project number: 324050651.
