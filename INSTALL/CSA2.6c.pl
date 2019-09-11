@@ -12,7 +12,7 @@
 
 my $userName =  $ENV{'LOGNAME'};
 
-my $dir ="/home/\$userName/CSA2.6";
+my $dir ="/home/$userName/CSA2.6";
 my $wtdbg = "$dir/bin/wtdbg2.2";
 my $script = "$dir/script";
 my $bin = "$dir/bin";
