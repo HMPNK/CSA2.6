@@ -11,7 +11,7 @@
   use Getopt::Std;
 my $userName =  $ENV{'LOGNAME'};
 
-my $dir ="/home/$userName/CSA2.6";
+my $dir ="/home/\$userName/CSA2.6";
 my $wtdbg = "$dir/bin/wtdbg2.2";
 my $bin = "$dir/bin";
 my $script = "$dir/script";
@@ -24,11 +24,13 @@ my $step = 4;
 my $edge = 4;
 my $minmatch = 0.05;
 my $cons = "wtdbg-cns";
+my $special = "-L 5000 -A";
+my $lrpe = 50000;
 
 #______________________________________________________________________
 #get options:
 my %options=();
-getopts("o:r:g:t:k:s:e:m:p:", \%options);
+getopts("o:r:g:t:k:s:e:m:p:l:", \%options);
 
 if(! $ARGV[0] && ! $options{r})       {
        print STDERR "
@@ -48,8 +50,9 @@ INPUT DATA: pacbio or oxford nanopore long reads (provided as fa.gz)
               -s step wtdbg assembler (default=4)
               -e minimum edge coverage wtdbg assembler (default=4) 
 	      -m Min similarity in WTDBG (default=0.05)
-              -p 1 = wtpoa-cns 0 = wtdbg-cns (default = 0) 
-		 (wtpoa-cns longer runtime, slightly better consensus accuracy)
+              -p 1 = wtpoa-cns 0 = wtdbg-cns 2= wtdbg-cns -S 0(default = 0) 
+		 (wtpoa-cns longer runtime, slightly better consensus accuracy; Parameter -S 0 is more stable on ultra long reads)
+              -l special parameters for wtdbg2 (default= -l \"-L 5000 -A\"; e.g. use -l \"-L 70000 --aln-min-length 25000 --keep-multiple-alignment-parts 1 -A\" for ultra long reads)
 ";       };
 die "ERROR: NEED a read file!!!\n" if(! $options{r});
 die "ERROR: unknown option $ARGV[0]" if $ARGV[0];
@@ -62,7 +65,11 @@ $kmer = $options{k} if($options{k});
 $step = $options{s} if($options{s});
 $edge = $options{e} if($options{e});
 $minmatch = $options{m} if($options{m});
-$cons = "wtpoa-cns" if($options{p});
+$cons = "wtpoa-cns" if($options{p}==1);
+$cons = "wtdbg-cns -S 0" if($options{p}==2);
+$special = $options{l} if($options{l});
+
+if($options{p}==2) {$lrpe=150000};
 
 my $threads2 =int($threads/2);
 
@@ -78,8 +85,8 @@ $COMMAND="$COMMAND\n\necho;date;echo RUN WTDBG on $reads;echo\n\n";
 $COMMAND="$COMMAND
 
 #RUN TWO WTDBG ASSEMBLIES
-$wtdbg/wtdbg2 -t $threads -i $reads -o $out-WTDBG -p $kmer -S $step -e $edge -s $minmatch -L 5000 -A 2>$out-wtdbg.log
-$wtdbg/wtdbg2 -t $threads -i $reads -o $out-WTDBG_2 --load-alignments $out-WTDBG.alignments.gz -p $kmer -S $step -e $edge -s $minmatch2 -L 5000 -A 2>>$out-wtdbg.log
+$wtdbg/wtdbg2 -t $threads -i $reads -o $out-WTDBG -p $kmer -S $step -e $edge -s $minmatch $special 2>$out-wtdbg.log
+$wtdbg/wtdbg2 -t $threads -i $reads -o $out-WTDBG_2 --load-alignments $out-WTDBG.alignments.gz -p $kmer -S $step -e $edge -s $minmatch2 $special 2>>$out-wtdbg.log
 
 echo;date;echo CREATE CONSENSUS / use $cons;echo
 
@@ -103,7 +110,7 @@ cut -f 1,2 $out-wtdbg.fa.fai > $out-wtdbg.fa.sizes
 awk '{print \$1\"\\t0\\t\"\$2}' $out-wtdbg.fa.sizes > $out-wtdbg.fa.GOOD.bed
 fi
 
-sort -k1,1V -k2,2n $out-wtdbg.fa.SPLIT.bed $out-wtdbg.fa.GOOD.bed | awk '{print \$0\"\\t\"\$1\"_\"x[\$1]++}' > $out-wtdbg.fa.SPLIT.REGIONS.bed
+sort -k1,1V -k2,2n $out-wtdbg.fa.SPLIT.bed $out-wtdbg.fa.GOOD.bed | $bin/bedtools merge -d -1000 | awk '{print \$0\"\\t\"\$1\"_\"x[\$1]++}' > $out-wtdbg.fa.SPLIT.REGIONS.bed
 $bin/bedtools getfasta -name -fi $out-wtdbg.fa -fo $out.step1.fa -bed $out-wtdbg.fa.SPLIT.REGIONS.bed
 
 ##WORKARROUND TO ASSEMBLE MISSING REGIONS IN WTDBG2 ASSEMBLIES (TYPICAL 10-20 MB in a 1GB genome)
@@ -112,7 +119,7 @@ awk '{if(o!=\$1 && (\$4-\$3)/\$2>0.1) {print \$1};o=\$1}' $out.step1.fa.paf | so
 sort reads_mapped.list readnames.list|uniq -u > reads_UNmapped.list
 $bin/pigz -dc $reads | $bin/seqtk subseq /dev/stdin reads_UNmapped.list | $bin/pigz -c > reads_UNmapped.fa.gz
 $wtdbg/wtdbg2 -t $threads -i reads_UNmapped.fa.gz -o UNmapped-wtdbg2 -p $kmer -S $step -e $edge -s $minmatch -L 1000 -A  2>UNmapped-wtdbg.log
-$wtdbg/wtdbg-cns -i UNmapped-wtdbg2.ctg.lay.gz -f -t 90 -o UNmapped-wtdbg2.fa 2>>UNmapped-wtdbg.log
+$wtdbg/$cons -i UNmapped-wtdbg2.ctg.lay.gz -f -t 90 -o UNmapped-wtdbg2.fa 2>>UNmapped-wtdbg.log
 $bin/seqtk seq -l 0 UNmapped-wtdbg2.fa >> $out.step1.fa
 
 echo;date;echo ASSEMBLY IMPROVEMENTS BY READ RE-MAPPING AND SPLITTING;echo
@@ -126,8 +133,8 @@ printf \"$bin/minimap2 -t $threads2 -x map-pb $out.step1.fa $reads > $out.step1.
 $bin/seqtk comp $out.step1.fa | cut -f 1,2 | sort -k1,1V -k2,2n > $out.step1.sizes
 awk '{if(\$12>=60 && o!=\$1){print};o=\$1}' $out.step1.LR.paf | cut -f 6,8,9 | sort -k1,1V -k2,2n | $bin/bedtools genomecov -bga -i - -g $out.step1.sizes > $out.step1.LR.bedcov
 
-#Get Genome coverage by good quality (Q20) and concordantly mapped LRPEs:
-$bin/samtools view -h $out.step1.LRPE.bam | awk '{if(substr(\$1,1,1)==\"@\" || \$2<1000){print}}'| $bin/samtools view -Sbu - | $bin/bedtools bamtobed -bedpe -i - | awk '{if(\$1==\$4 && \$8>=20 && \$9==\$10 && \$6-\$2<50000){print}}'| cut -f 1,2,6| sort -k1,1V -k2,2n|$bin/bedtools genomecov -bga -i - -g $out.step1.sizes > $out.step1.LRPE.bedcov
+#Get Genome coverage by good quality (MQ20) and concordantly mapped LRPEs:
+$bin/samtools view -h $out.step1.LRPE.bam | awk '{if(substr(\$1,1,1)==\"@\" || \$2<1000){print}}'| $bin/samtools view -Sbu - | $bin/bedtools bamtobed -bedpe -i - | awk '{if(\$1==\$4 && \$8>=20 && \$9==\$10 && \$6-\$2<$lrpe){print}}'| cut -f 1,2,6| sort -k1,1V -k2,2n|$bin/bedtools genomecov -bga -i - -g $out.step1.sizes > $out.step1.LRPE.bedcov
 
 #JOIN COVERAGE FILES
 $bin/bedtools unionbedg -i $out.step1.LR.bedcov  $out.step1.LRPE.bedcov -g $out.step1.sizes | sort -k1,1V -k2,2n > $out.step1.LR_LRPE.bedcov

@@ -12,7 +12,7 @@
 
 my $userName =  $ENV{'LOGNAME'};
 
-my $dir ="/home/$userName/CSA2.6";
+my $dir ="/home/\$userName/CSA2.6";
 my $wtdbg = "$dir/bin/wtdbg2.2";
 my $script = "$dir/script";
 my $bin = "$dir/bin";
@@ -29,11 +29,12 @@ my $scaff;
 my $guess = "on";
 my $minmatch = 0.05;
 my $cons = 0;
+my $special = "-L 5000 -A";
 
 #______________________________________________________________________
 #get options:
 my %options=();
-getopts("C:S:o:r:g:t:k:s:e:d:x:m:p:", \%options);
+getopts("C:S:o:r:g:t:k:s:e:d:x:m:p:l:", \%options);
 
 if(! $ARGV[0] && ! $options{r})       {
        print STDERR "
@@ -73,7 +74,10 @@ INPUT DATA: pacbio or oxford nanopore long reads (provided as fa.gz)
                  Use \"-x on\" if you a have a closely related high quality reference genome with similar karyotype (family or genus level, same haploid chr no.)
                  If \"-x off\" a second assembly using guessed edges in the last assembly step will be output anyway since version 2.5 (\"xyz.final.B.fa\")
 
-              -p 0,1 (0 = wtdbg-cons (default), 1 = wtpoa-cons; consensus calculation in step 1, wtpoa-cns is slower but a bit more accurate)
+              -p 0,1,2 (0 = wtdbg-cons (default), 1 = wtpoa-cons; consensus calculation in step 1, 2 = wtdbg-cons -S 0
+                        wtpoa-cns is slower but a bit more accurate; Parameter -S 0 is more stable on very long reads (e.g. ONT Ultra Long Reads))
+
+              -l special parameters for wtdbg2 (default= -l \"-L 5000 -A\"; e.g. use -l \"-L 70000 --aln-min-length 25000 --keep-multiple-alignment-parts 1 -A\" for ultra long reads)
 
 This script generates a bash script for running the pipeline! Write script to file and run by: nohup bash <script> & !
 ";       };
@@ -93,6 +97,7 @@ $scaff = $options{S} if($options{S});
 $guess = $options{x} if($options{x});
 $minmatch = $options{m} if($options{m});
 $cons = $options{p} if($options{p});
+$special = $options{l} if($options{l});
 
 if($threads<2){$threads=2};
 
@@ -133,7 +138,7 @@ if(! $ctg) {if(! $scaff){
 $COMMAND="$COMMAND
 mkdir 01_WTDBG
 cd 01_WTDBG
-$script/01_ASSEMBLY.pl -r ../../$reads -o $out -t $threads -k $kmer -s $step -e $edge -m $minmatch -p $cons > STEP_01.bash
+$script/01_ASSEMBLY.pl -r ../../$reads -o $out -t $threads -k $kmer -s $step -e $edge -m $minmatch -p $cons -l \"$special\" > STEP_01.bash
 time bash STEP_01.bash
 cd ..
 ";

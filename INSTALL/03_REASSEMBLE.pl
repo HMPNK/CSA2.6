@@ -10,7 +10,7 @@
   use strict;
   use Getopt::Std;
 my $userName =  $ENV{'LOGNAME'};
-my $dir ="/home/$userName/CSA2.6";
+my $dir ="/home/\$userName/CSA2.6";
 my $wtdbg = "$dir/bin/wtdbg2.2";
 my $bin = "$dir/bin";
 my $script = "$dir/script";
@@ -95,18 +95,22 @@ echo;date;echo WRITE GAP/CTGEND MATCHING RAW READS TO FILES;echo
 $bin/pigz -dc $reads | $bin/seqtk seq -l 0 - | awk -v infile=$assembly.reads_to_gaps.list 'BEGIN{while(getline l < infile){split(l,d,\"\\t\");d[1]=\">\"d[1];gap[d[1]]=d[2]}} {if(substr(\$1,1,1)==\">\"){outfile=gap[\$1]\".fasta\"};if(outfile!=\".fasta\"){print \$0 >> outfile};close(outfile)}'
 
 echo;date;echo RUN LOCAL ASSEMBLIES;echo
-wc -l *gap*fasta *start*fasta *end*fasta| sort -k1,1rn |awk '{i++;if(\$1>=4 && i>1){print \"sh $script/wtdbg-BATCH.sh \"\$2\" $wtdbg\/\"}}' > $assembly.wtdbg-BATCH-ALL-RUNS.sh
+
+
+cut -f 2 $assembly.reads_to_gaps.list > greplist
+#use xargs here to not run into file number limits!!!
+ls | grep -F -f greplist | grep fasta | xargs wc -l | sort -k1,1rn |awk '{i++;if(\$1>=4 && i>1){print \"sh $script/wtdbg-BATCH.sh \"\$2\" $wtdbg\/\"}}' > $assembly.wtdbg-BATCH-ALL-RUNS.sh
 #run local reassemblies in parallel, timeout is now implemented in wtdbg-BATCH.sh -> sometimes happens with problematic repeats
 cat $assembly.wtdbg-BATCH-ALL-RUNS.sh| $bin/parallel -j $threads > parallel.log 2>&1
 
 #merge contigs
-cat *gap*wtdbg*fa *start*wtdbg*fa *end*wtdbg*fa> $assembly.GAP_HELPERS.fa
+ls | grep -F -f greplist | grep wtdbg.fa | xargs cat > $assembly.GAP_HELPERS.fa
 #make 5X coverage for GAP_Helpers (and add  unique fasta ids!)
 cat $assembly.GAP_HELPERS.fa $assembly.GAP_HELPERS.fa $assembly.GAP_HELPERS.fa $assembly.GAP_HELPERS.fa $assembly.GAP_HELPERS.fa| $bin/seqtk seq -l 0 - |awk '{if(substr(\$1,1,1)==\">\") {n=\$1\"_\"c[\$1]++} else {print n\"\\n\"\$1}}'| $bin/pigz -c > $assembly.GAP_HELPERS_5X.fa.gz
+rm $assembly.GAP_HELPERS.fa
 #write gap assembly logs to single file
-cat *gap*wtdbg.log *end*wtdbg.log *start*wtdbg.log> $assembly.GAP.assemblies.log
+ls | grep -F -f greplist | grep wtdbg.log | xargs cat> $assembly.GAP.assemblies.log
 #remove single files
-cut -f 2 $assembly.reads_to_gaps.list > greplist
 ls| grep -F -f greplist | xargs rm
 
 
@@ -168,7 +172,7 @@ cut -f 1,2 $assembly.GAPFILL.fa.fai > $assembly.GAPFILL.sizes
 awk '{print \$1\"\\t0\\t\"\$2}' $assembly.GAPFILL.sizes > $assembly.GAPFILL.GOOD.bed
 fi
 
-sort -k1,1V -k2,2n $assembly.GAPFILL.SPLIT.bed $assembly.GAPFILL.GOOD.bed | awk '{if(\$3-\$2>=5000){print \$0\"\\t\"\$1\"_\"x[\$1]++}}' > $assembly.GAPFILL.REGIONS.bed
+sort -k1,1V -k2,2n $assembly.GAPFILL.SPLIT.bed $assembly.GAPFILL.GOOD.bed | $bin/bedtools merge -d -1000 | awk '{if(\$3-\$2>=5000){print \$0\"\\t\"\$1\"_\"x[\$1]++}}' > $assembly.GAPFILL.REGIONS.bed
 $bin/bedtools getfasta -name -fi $assembly.GAPFILL.fa -fo $out.step3.fa -bed $assembly.GAPFILL.REGIONS.bed > /dev/null 2>&1
 ";
 $COMMAND="$COMMAND\n#END of GAP REASSEMBLY and CLOSURE. IMPROVED CONTIGS can be found in: $out.step3.fa\n\n

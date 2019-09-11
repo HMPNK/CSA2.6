@@ -11,7 +11,7 @@
   use strict;
   use Getopt::Std;
 my $userName =  $ENV{'LOGNAME'};
-my $dir ="/home/$userName/CSA2.6";
+my $dir ="/home/\$userName/CSA2.6";
 my $script = "$dir/script";
 my $bin = "$dir/bin";
 my $contigs = "";
@@ -84,7 +84,7 @@ $bin/lastdb -P $threads $m[-1]  $m[-1].mask.fa
 
 echo;date;echo RUN WHOLE GENOME ALIGNMENT BY LAST;echo
 
-bash $script/FASTLAST.sh $contigs $m[-1] $m[-1].maf $out $queryname $threads 1000000 $dir >> parallel.log 2>&1
+bash $script/FASTLAST.sh $contigs $m[-1] $m[-1].maf $out $queryname $threads 500000 $dir >> parallel.log 2>&1
 
 echo;date;echo RUN RAGOUT TO ORDER CONTIGS ACCORDING TO REFERENCE;echo
 
