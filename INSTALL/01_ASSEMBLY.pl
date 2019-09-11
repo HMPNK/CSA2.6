@@ -11,7 +11,7 @@
   use Getopt::Std;
 my $userName =  $ENV{'LOGNAME'};
 
-my $dir ="/home/\$userName/CSA2.6";
+my $dir ="/home/$userName/CSA2.6";
 my $wtdbg = "$dir/bin/wtdbg2.2";
 my $bin = "$dir/bin";
 my $script = "$dir/script";
