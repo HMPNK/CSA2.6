@@ -96,7 +96,7 @@ printf \"$wtdbg/$cons -i $out-WTDBG.ctg.lay.gz -f -t $threads2 -o $out-wtdbg.fa 
 
 echo;date;echo COMPARE ASSEMBLIES AND SPLIT CONTIGS AT DIFFERENCES;echo
 
-$bin/minimap2 -t $threads -x asm5 $out-wtdbg.fa $out-wtdbg_2.fa > $out-wtdbg_1vs2.paf 2>1vs2.minimap.log
+$bin/minimap2 -I 100G -t $threads -x asm5 $out-wtdbg.fa $out-wtdbg_2.fa > $out-wtdbg_1vs2.paf 2>1vs2.minimap.log
 awk '{if(\$12>=60 && \$9-\$8 > 30000){print \$1\"\\t\"\$6\"\\t\"\$8\"\\t\"\$9}}' $out-wtdbg_1vs2.paf| sort -k2,2V -k3,3n -k4,4n| awk '{if(\$2==oq && \$1!=oR){n=split(ol,d,\"\\t\");if(d[n]<=\$3){print \$2\"\\t\"d[n]\"\\t\"\$3} else {print \$2\"\\t\"\$3\"\\t\"d[n]}};oR=\$1;oq=\$2;ol=\$0}' > $out-wtdbg.fa.SPLIT.bed
 
 if [ -s $out-wtdbg.fa.SPLIT.bed ]
@@ -114,7 +114,7 @@ sort -k1,1V -k2,2n $out-wtdbg.fa.SPLIT.bed $out-wtdbg.fa.GOOD.bed | $bin/bedtool
 $bin/bedtools getfasta -name -fi $out-wtdbg.fa -fo $out.step1.fa -bed $out-wtdbg.fa.SPLIT.REGIONS.bed
 
 ##WORKARROUND TO ASSEMBLE MISSING REGIONS IN WTDBG2 ASSEMBLIES (TYPICAL 10-20 MB in a 1GB genome)
-$bin/pigz -dc $reads | awk '{if(substr(\$1,1,1)==\">\") {print substr(\$1,2) > \"readnames.list\" ;print} else{print}}' | $bin/minimap2 -t $threads -x map-pb $out.step1.fa - > $out.step1.fa.paf 2> remap.log
+$bin/pigz -dc $reads | awk '{if(substr(\$1,1,1)==\">\") {print substr(\$1,2) > \"readnames.list\" ;print} else{print}}' | $bin/minimap2 -I 100G -t $threads -x map-pb $out.step1.fa - > $out.step1.fa.paf 2> remap.log
 awk '{if(o!=\$1 && (\$4-\$3)/\$2>0.1) {print \$1};o=\$1}' $out.step1.fa.paf | sort -u > reads_mapped.list
 sort reads_mapped.list readnames.list|uniq -u > reads_UNmapped.list
 $bin/pigz -dc $reads | $bin/seqtk subseq /dev/stdin reads_UNmapped.list | $bin/pigz -c > reads_UNmapped.fa.gz
@@ -126,7 +126,7 @@ echo;date;echo ASSEMBLY IMPROVEMENTS BY READ RE-MAPPING AND SPLITTING;echo
 
 #MAP LRs and LRPEs
 
-printf \"$bin/minimap2 -t $threads2 -x map-pb $out.step1.fa $reads > $out.step1.LR.paf 2>LR.log \\n $bin/pigz -dc $reads | $bin/seqtk seq -l 0 - | awk -f $script/EOF_LR.awk | $bin/minimap2 -t $threads2 -x sr -k19 -w10 -a $out.step1.fa - 2>LRPE.log | $bin/samtools view -Sb -@ 6 - > $out.step1.LRPE.bam\" | $bin/parallel -j 2 >> parallel.log 2>&1
+printf \"$bin/minimap2 -I 100G -t $threads2 -x map-pb $out.step1.fa $reads > $out.step1.LR.paf 2>LR.log \\n $bin/pigz -dc $reads | $bin/seqtk seq -l 0 - | awk -f $script/EOF_LR.awk | $bin/minimap2 -I 100G -t $threads2 -x sr -k19 -w10 -a $out.step1.fa - 2>LRPE.log | $bin/samtools view -Sb -@ 6 - > $out.step1.LRPE.bam\" | $bin/parallel -j 2 >> parallel.log 2>&1
 
 
 #Get genome coverage by best matches of LRs:
