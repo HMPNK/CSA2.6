@@ -86,9 +86,13 @@ CSA2.6/CSA2.6c.pl
  conda_root_directory_usually_homedir : has to be replaced with the correct location.
 
 # Default parameters
-CSA default parameters are currently tweaked for Pacbio RSII and ONT reads (30-60X)
-We have found that SEQUEL reads behave quite different, here adding custom parameters 
-for WTDBG2 helps: -l "-p 0 -k 15 -L5000 -A" .
+CSA default parameters are currently tweaked for Pacbio RSII and ONT reads (30-60X, N50 readlength 10-30 kbp)
+We have found that some SEQUEL datasets behave quite different, here adding custom parameters 
+for WTDBG2 will helps: -l "-p 0 -k 15 -L5000 -A" .
+
+ULtra long read assembly may be improved by increeasing read length cut-off and alignment length cut-off:
+For example: -l "-L 70000 --aln-min-length 25000 --keep-multiple-alignment-parts 1 -A" , for a dataset with 
+readlength N50 of 70 kbp.
 
 # TEST RUN ON YEAST OXFORD NANOPORE dataset:
 ```sh
