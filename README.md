@@ -85,6 +85,10 @@ CSA2.6/CSA2.6c.pl
 ```
  conda_root_directory_usually_homedir : has to be replaced with the correct location.
 
+# CSA default parameters are currently tweaked for Pacbio RSII and ONT reads (30-60X)
+# We have found that SEQUEL reads behave quite different, here adding the custom parameters 
+# for WTDBG2 helps: -l "-p 0 -k 15 -L10000 -A" . We are currently evaluating other
+
 # TEST RUN ON YEAST OXFORD NANOPORE dataset:
 ```sh
 mkdir CSA-TEST
