@@ -87,8 +87,8 @@ CSA2.6/CSA2.6c.pl
 
 # Default parameters
 CSA default parameters are currently tweaked for Pacbio RSII and ONT reads (30-60X)
-We have found that SEQUEL reads behave quite different, here adding the custom parameters 
-for WTDBG2 helps: -l "-p 0 -k 15 -L5000 -A" . Play with -k 17,19,21.
+We have found that SEQUEL reads behave quite different, here adding custom parameters 
+for WTDBG2 helps: -l "-p 0 -k 15 -L5000 -A" .
 
 # TEST RUN ON YEAST OXFORD NANOPORE dataset:
 ```sh
