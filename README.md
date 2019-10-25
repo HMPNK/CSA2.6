@@ -88,7 +88,7 @@ CSA2.6/CSA2.6c.pl
 # Default parameters
 CSA default parameters are currently tweaked for Pacbio RSII and ONT reads (30-60X, N50 readlength 10-30 kbp)
 We have found that some SEQUEL datasets behave quite different, here adding custom parameters 
-for WTDBG2 will help: -l "-p 0 -k 15 -L5000 -A" .
+for WTDBG2 will help: -l "-p 0 -k 15 -L5000 -S 2 -A" .
 
 Ultra long read assembly may be improved by increasing read length cut-off and alignment length cut-off:
 For example: -l "-L 70000 --aln-min-length 25000 --keep-multiple-alignment-parts 1 -A" , worked well for a human dataset with 
