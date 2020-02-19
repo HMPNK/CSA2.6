@@ -118,6 +118,11 @@ The test run will take about 30-60 min (you can speed it up by increasing "-t 4"
 
 You may see a few "core dumps", these are single gap re-assembly jobs that failed, you should just not care. Some gap re-assembly jobs may run very long due to huge read pile ups in that location, therefore we force gap re-assemblies to stop after 20 minutes using "timeout".
 
+# POLISHING CONSENSUS QUALITY OF CSA ASSEMBLIES:
+All of the widely used genome assembly tools like CANU, FALCON, FLYE and even SHASTA do not include the polishing algorithms that are needed to get error rates below Q40 (which is needed for annotation without an excess of frameshift errors). As it is currently common practice, we leave the choice of consensus polishing to the user. This is also, because choosing the right polishing pipeline for the different long-read technologies (SMRT or ONT) can be a complex topic (e. g. involving different sequencing libraries and also depending on properties of the species you are sequencing) and in our opinion requires some human decision making.
+
+We have currently made good experience doing one iteration of polishing by the FLYE polisher and long read data, followed by two iterations using PILON and illumina short read data. Some long read polishers (e.g. MEDAKA and FLYE) do not like "n" characters, it is necessary to split the CSA scaffolds into contigs before polishing and re-build the scaffolds afterwards.
+
 
 # FUNDING
 This work was funded by the German Research foundation (DFG) “eigene Stelle” grant within the project KU 3596/1-1; project number: 324050651.
