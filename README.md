@@ -126,3 +126,6 @@ We have currently made good experience doing one iteration of polishing by the F
 
 # FUNDING
 This work was funded by the German Research foundation (DFG) “eigene Stelle” grant within the project KU 3596/1-1; project number: 324050651.
+
+# CITE
+Heiner Kuhl, Ling Li, Sven Wuertz, Matthias Stöck, Xu-Fang Liang, Christophe Klopp, CSA: A high-throughput chromosome-scale assembly pipeline for vertebrate genomes, GigaScience, Volume 9, Issue 5, May 2020, giaa034, https://doi.org/10.1093/gigascience/giaa034 
