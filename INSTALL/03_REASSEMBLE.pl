@@ -99,7 +99,7 @@ echo;date;echo RUN LOCAL ASSEMBLIES;echo
 
 cut -f 2 $assembly.reads_to_gaps.list > greplist
 #use xargs here to not run into file number limits!!!
-ls | grep -F -f greplist | grep fasta | xargs wc -l | sort -k1,1rn |awk '{i++;if(\$1>=4 && i>1){print \"sh $script/wtdbg-BATCH.sh \"\$2\" $wtdbg\/\"}}' > $assembly.wtdbg-BATCH-ALL-RUNS.sh
+ls | grep -F -f greplist | grep fasta | xargs wc -l | sort -k1,1rn | grep -vw total | awk '{i++;if(\$1>=4 && i>=1){print \"sh $script/wtdbg-BATCH.sh \"\$2\" $wtdbg\/\"}}' > $assembly.wtdbg-BATCH-ALL-RUNS.sh
 #run local reassemblies in parallel, timeout is now implemented in wtdbg-BATCH.sh -> sometimes happens with problematic repeats
 cat $assembly.wtdbg-BATCH-ALL-RUNS.sh| $bin/parallel -j $threads > parallel.log 2>&1
 
