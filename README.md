@@ -85,6 +85,12 @@ CSA2.6/CSA2.6c.pl
 ```
  conda_root_directory_usually_homedir : has to be replaced with the correct location.
 
+Some users encountered problems in Step3 of the pipeline, if the language variable was NOT set to "en_US.UTF-8".
+Make sure that your system uses "en_US.UTF-8" by:
+```sh
+export LANG='en_US.UTF-8'
+```
+
 # Default parameters
 CSA default parameters are currently tweaked for Pacbio RSII and ONT reads (30-60X, N50 readlength 10-30 kbp)
 We have found that some SEQUEL datasets behave quite different, here adding custom parameters 
