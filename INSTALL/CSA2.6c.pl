@@ -56,7 +56,10 @@ INPUT DATA: pacbio or oxford nanopore long reads (provided as fa.gz)
 
               -g reference sequences (suitable backbone assembly or reference genomes,
                                      ordered by evolutionary distance (most similar first), 
-                                     as comma separated list. Input format fasta or fasta.gz)
+                                     as comma separated list. Input format fasta or fasta.gz
+                                     DO NOT USE PATHS HERE! JUST LINK (by ln -s) FILES TO THE DIRECTORY
+                                     WHERE CSA IS RUN AND USE ONLY FILENAMES!
+                                     )
 
               -o output-prefix
 
