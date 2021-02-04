@@ -90,6 +90,8 @@ Make sure that your system uses "en_US.UTF-8" by:
 ```sh
 export LANG='en_US.UTF-8'
 ```
+If you encounter problems during the run regarding paths to the longread-file or reference file locations. Try to link these files to the folder where you run CSA and omit paths in the CSA commandline.
+
 
 # Default parameters
 CSA default parameters are currently tweaked for Pacbio RSII and ONT reads (30-60X, N50 readlength 10-30 kbp)
