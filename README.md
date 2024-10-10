@@ -58,6 +58,7 @@ INSTALL CSA binaries and scripts!!!
 cd CSA2.6
 cd INSTALL
 bash INSTALL.bash
+#alterantively try "INSTALL-Oct24.bash", if INSTALL.bash does not finish correctly.
 ```
  INITIALIZE MINICONDA ENVIRONMENT, ALTERNATIVELY YOU MAY JUST LOGOUT and LOGIN 
 ```sh
