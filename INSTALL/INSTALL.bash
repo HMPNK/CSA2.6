@@ -80,8 +80,7 @@ conda install -y -c bioconda parallel
 TESTVAR=$(which parallel)
 ln -s $TESTVAR bin/
 
-#conda install -y -c bioconda openssl=1.0 #version should not be fixed anymore 24/10/10
-conda install -y -c bioconda openssl
+conda install -y -c bioconda openssl=1.0
 
 ##WTDBG2-2 (use sources as we need version 2.2!)
 tar xvf wtdbg-v2.2.tar.gz
