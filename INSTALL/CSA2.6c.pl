@@ -52,10 +52,12 @@ INPUT DATA: pacbio or oxford nanopore long reads (provided as fa.gz)
 
               -r input long reads as fa.gz (required!)
 
-              -C input genome assembly contigs (overrides initial WTDBG assembly step
+              -C input genome assembly contigs as fasta (overrides initial WTDBG assembly step
                                                 fasta headers SHOULD NOT contain \":\", \"-\" or \".\" !
                                                 Use simple fasta headers like \"scf1, scf2, ..., scfn\"
-                                                Otherwise crashes STEP2 of CSA!)
+                                                Otherwise crashes STEP2 of CSA!
+                                                Uses uncompressed fasta file only!
+                                                )
 
               -g reference sequences (suitable backbone assembly or reference genomes,
                                      ordered by evolutionary distance (most similar first), 
